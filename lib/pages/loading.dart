@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fooddrawer/services/getData.dart';
 
 class Loading extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class _LoadingState extends State<Loading> {
   void initState() {
     super.initState();
     perform_login();
+
   }
   @override
 
@@ -31,6 +33,10 @@ class _LoadingState extends State<Loading> {
   void perform_login() async {
   //function for retreving login data
   //temporarily a timer
+    userData instance = userData();
+    instance.loadData();
+    print(instance.inventoryData);
+
     await Future.delayed( // simulating login to server, waits to seconds to perform it
       Duration(seconds: 2),
           () => {},
@@ -38,7 +44,7 @@ class _LoadingState extends State<Loading> {
     //when the login is performed succesfully we go to the home screen
     Navigator.pushReplacementNamed(context, '/home', arguments: {
       'name': "USERNAME",
-      'food_items': 'Some_data',
+      'inventoryData': instance.inventoryData,
     });
 
 

@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart'; //materials package
+import 'package:flutter/material.dart';
 import 'package:fooddrawer/template/basic_elements.dart';
 import 'package:fooddrawer/pages/homeScreens/basicOptions.dart';
 import 'package:fooddrawer/pages/homeScreens/foodList.dart';
 import 'package:fooddrawer/pages/homeScreens/ShoppingList.dart';
+import 'package:fooddrawer/services/getData.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -10,18 +11,21 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  Map data = {};
   Color Primary_Color = Colors.amber[600];
 
   int _selectedIndex = 1;
   void _OnNavItemTaped(int index) {
     setState(() {_selectedIndex = index;});
   }
-
-  final List<Widget> _children = [
-    PlaceholderWidget(Colors.deepOrange),
-    FoodList(),
-    PlaceholderWidget(Colors.green),
-  ];
+  List<Widget> _children;
+  void getChilderen() {
+    _children = [
+      PlaceholderWidget(Colors.deepOrange),
+      FoodList(data),
+      PlaceholderWidget(Colors.green),
+    ];
+  }
 
   final List<BottomNavigationBarItem> navBarItems = const <BottomNavigationBarItem>[
     BottomNavigationBarItem(
@@ -40,6 +44,10 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+
+    data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
+    getChilderen(); //retrieves current state of children
+
     return Scaffold(
       appBar: CustomAppBar(Primary_Color: Primary_Color),
       body: _children[_selectedIndex],
@@ -50,7 +58,9 @@ class _HomeState extends State<Home> {
         onTap: _OnNavItemTaped,
       ),
     );
+
   }
+
 }
 
 class PlaceholderWidget extends StatelessWidget {
