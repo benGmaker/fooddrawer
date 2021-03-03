@@ -8,8 +8,8 @@ class userData {
   Future<void> loadData() async {
     //temporarily creating data
     Response response = await get('http://82.75.109.169/get_data.php?food_id=22');
-    Map data = jsonDecode(response.body);
-    //Map data = jsonDecode(response_data[1]);
+    List response_data = jsonDecode(response.body);
+    Map data = response_data[0];
     print(data.runtimeType);
     print(data['food_id'].runtimeType);
     inventoryData = [
