@@ -3,19 +3,31 @@ import 'package:http/http.dart';
 import 'dart:convert';
 
 class userData {
-  List<inventoryItem> inventoryData;
+  List
+  inventoryData;
 
   Future<void> loadData() async {
-    //temporarily creating data
-    Response response = await get('http://82.75.109.169/get_data.php?food_id=22');
+    inventoryData = [];
+    //get the food id's
+    List food = [22,22,11,22,22];
+    var futureData = <Future>[];
+    for (var food_id in food) {
+      futureData.add(get_InventoryItem(food_id));
+    }
+
+    inventoryData = await Future.wait(futureData);
+
+
+  }
+
+  Future<inventoryItem> get_InventoryItem(int food_id) async {
+    Response response = await get('http://82.75.109.169/get_data.php?food_id=$food_id');
     List response_data = jsonDecode(response.body);
     Map data = response_data[0];
-    print(data.runtimeType);
-    print(data['food_id'].runtimeType);
-    inventoryData = [
-      inventoryItem(id: data['food_id'], name: data['name'], value: data['mass'], unit: data['unit']),
-    ];
+    return inventoryItem(id: data['food_id'], name: data['name'], value: data['mass'], unit: data['unit']);
   }
+
+
 }
 
 class inventoryItem {
