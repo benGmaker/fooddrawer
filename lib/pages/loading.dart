@@ -9,45 +9,39 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-
   @override
   void initState() {
     super.initState();
     perform_login();
-
   }
-  @override
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.blue[900],
         body: Center(
             child: SpinKitFadingCube(
-              color: Colors.white,
-              size: 50.0,
-            )
-        )
-    );
+          color: Colors.white,
+          size: 50.0,
+        )));
   }
 
   void perform_login() async {
-  //function for retreving login data
-  //temporarily a timer
+    //function for retreving login data
+    //temporarily a timer
     userData instance = userData();
-    instance.loadData();
+    await instance.loadData();
     print(instance.inventoryData);
 
-    await Future.delayed( // simulating login to server, waits to seconds to perform it
+    await Future.delayed(
+      // simulating login to server, waits to seconds to perform it
       Duration(seconds: 2),
-          () => {},
+      () => {},
     );
     //when the login is performed succesfully we go to the home screen
     Navigator.pushReplacementNamed(context, '/home', arguments: {
       'name': "USERNAME",
       'inventoryData': instance.inventoryData,
     });
-
-
   }
-
 }

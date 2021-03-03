@@ -1,41 +1,40 @@
 //class to retrieve data from server and or local storage.
-import 'package:fooddrawer/services/getData.dart';
+import 'package:http/http.dart';
+import 'dart:convert';
 
-class userData{
+class userData {
   List<inventoryItem> inventoryData;
 
-
-
-  void loadData() {
+  Future<void> loadData() async {
     //temporarily creating data
+    Response response = await get('http://82.75.109.169/get_data.php?food_id=22');
+    Map data = jsonDecode(response.body);
+    //Map data = jsonDecode(response_data[1]);
+    print(data.runtimeType);
+    print(data['food_id'].runtimeType);
     inventoryData = [
-      inventoryItem(id: 1234, name: "Rice", value: 2400, unit: "g"),
-      inventoryItem(id: 2345, name: "Grain", value: 2327, unit: "g"),
-      inventoryItem(id: 5341, name: "Milk", value: 1.2, unit: "L"),
-      inventoryItem(id: 5252, name: "Bread", value: 500, unit: "g"),
+      inventoryItem(id: data['food_id'], name: data['name'], value: data['mass'], unit: data['unit']),
     ];
   }
-
 }
 
+class inventoryItem {
+  String id;
+  String name;
+  String value;
+  String unit;
 
-class inventoryItem{
-int id;
-String name;
-double value;
-String unit;
 //tumbnail
 
-inventoryItem({
-  this.id,
-  this.name,
-  this.value,
-  this.unit,
-}){}
+  inventoryItem({
+    this.id,
+    this.name,
+    this.value,
+    this.unit,
+  }) {}
+
 
   String toString() {
     return "inventoryItem: [id: $id, name: $name, value: $value, unit: $unit]";
   }
-
-
 }

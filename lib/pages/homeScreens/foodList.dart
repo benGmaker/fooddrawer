@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class FoodList extends StatefulWidget {
   Map data;
 
@@ -12,6 +13,7 @@ class FoodList extends StatefulWidget {
 
 class _FoodListState extends State<FoodList> {
   Map data;
+
   _FoodListState(Map data) {
     this.data = data;
   }
@@ -21,20 +23,14 @@ class _FoodListState extends State<FoodList> {
   void getChildren() {
     children = [];
     for (var item in data["inventoryData"]) {
-      children.add(
-          foodItem(
-            title: item.name,
-            color: Colors.amber[400]
-          )
-      );
+      children.add(foodItem(title: item.name, color: Colors.amber[400]));
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
     getChildren();
-    return   ListView(
+    return ListView(
       padding: const EdgeInsets.all(8),
       children: children,
     );
@@ -44,7 +40,9 @@ class _FoodListState extends State<FoodList> {
 class foodItem extends StatefulWidget {
   String title;
   Color color;
+
   foodItem({this.title, this.color});
+
   @override
   _foodItemState createState() => _foodItemState(title: title, color: color);
 }
@@ -52,6 +50,7 @@ class foodItem extends StatefulWidget {
 class _foodItemState extends State<foodItem> {
   String title;
   Color color;
+
   _foodItemState({this.title, this.color});
 
   @override
@@ -66,4 +65,3 @@ class _foodItemState extends State<foodItem> {
     );
   }
 }
-

@@ -15,10 +15,15 @@ class _HomeState extends State<Home> {
   Color Primary_Color = Colors.amber[600];
 
   int _selectedIndex = 1;
+
   void _OnNavItemTaped(int index) {
-    setState(() {_selectedIndex = index;});
+    setState(() {
+      _selectedIndex = index;
+    });
   }
+
   List<Widget> _children;
+
   void getChilderen() {
     _children = [
       PlaceholderWidget(Colors.deepOrange),
@@ -27,7 +32,8 @@ class _HomeState extends State<Home> {
     ];
   }
 
-  final List<BottomNavigationBarItem> navBarItems = const <BottomNavigationBarItem>[
+  final List<BottomNavigationBarItem> navBarItems =
+      const <BottomNavigationBarItem>[
     BottomNavigationBarItem(
       icon: Icon(Icons.settings),
       label: 'Quick settings',
@@ -44,7 +50,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-
     data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
     getChilderen(); //retrieves current state of children
 
@@ -58,9 +63,7 @@ class _HomeState extends State<Home> {
         onTap: _OnNavItemTaped,
       ),
     );
-
   }
-
 }
 
 class PlaceholderWidget extends StatelessWidget {
@@ -75,8 +78,3 @@ class PlaceholderWidget extends StatelessWidget {
     );
   }
 }
-
-
-
-
-

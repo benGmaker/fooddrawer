@@ -4,7 +4,6 @@ import 'package:fooddrawer/pages/home.dart';
 
 void main() => runApp(MyApp());
 
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -14,7 +13,6 @@ class MyApp extends StatelessWidget {
         '/': (context) => Loading(),
         '/home': (context) => Home(),
       },
-
     );
   }
 }
