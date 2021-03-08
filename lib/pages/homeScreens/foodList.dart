@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fooddrawer/services/getData.dart';
 
 class FoodList extends StatefulWidget {
   Map data;
@@ -23,7 +24,7 @@ class _FoodListState extends State<FoodList> {
   void getChildren() {
     children = [];
     for (var item in data["inventoryData"]) {
-      children.add(foodItem(title: item.name, color: Colors.amber[400]));
+      children.add(foodItem(item_data: item, color: Colors.amber[400]));
     }
   }
 
@@ -38,30 +39,66 @@ class _FoodListState extends State<FoodList> {
 }
 
 class foodItem extends StatefulWidget {
-  String title;
+  inventoryItem item_data;
   Color color;
 
-  foodItem({this.title, this.color});
+  foodItem({this.item_data, this.color});
 
   @override
-  _foodItemState createState() => _foodItemState(title: title, color: color);
+  _foodItemState createState() =>
+      _foodItemState(item_data: item_data, color: color);
 }
 
 class _foodItemState extends State<foodItem> {
-  String title;
+  inventoryItem item_data;
   Color color;
+  double min_height = 80;
 
-  _foodItemState({this.title, this.color});
+  _foodItemState({this.item_data, this.color});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        height: 50,
-        color: color,
-        child: Center(child: Text(title)),
-      ),
+      child: ElevatedButton(
+          onPressed: () => {},
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Icon(Icons.fastfood_rounded),
+              //starting symbol or picture
+              SizedBox(width: 0, height: min_height),
+              //using a one dimension sized box to set the height of the item
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      item_data.name,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      item_data.value + "  " + item_data.unit,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(),
+                    ),
+                  ],
+                ),
+              ),
+
+              IconButton(
+                //ending item
+                icon: Icon(Icons.edit),
+                color: Colors.white,
+                onPressed: () {},
+              ),
+            ],
+          ),
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(color))),
     );
   }
 }
