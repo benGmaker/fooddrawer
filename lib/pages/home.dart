@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
 
   void getChilderen() {
     _children = [
-      PlaceholderWidget(Colors.deepOrange),
+      OptionsList(),
       FoodList(data),
       PlaceholderWidget(Colors.green),
     ];
