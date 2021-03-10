@@ -7,22 +7,19 @@ class FoodList extends StatefulWidget {
   FoodList({this.data});
 
   @override
-  _FoodListState createState() => _FoodListState(data);
+  _FoodListState createState() => _FoodListState(data: data);
 }
 
 class _FoodListState extends State<FoodList> {
   Map data;
-
-  _FoodListState(Map data) {
-    this.data = data;
-  }
+  _FoodListState({this.data});
 
   List<Widget> children;
-
   void getChildren() {
     children = [];
-    for (var item in data["inventoryData"]) {
-      children.add(foodItem(item_data: item));
+    for (inventoryItem item in data["inventoryData"]) {
+
+      children.add(foodItem(item_data: item, HistoryData: data['HistoryData']));
     }
   }
 
@@ -38,27 +35,29 @@ class _FoodListState extends State<FoodList> {
 
 class foodItem extends StatefulWidget {
   inventoryItem item_data;
-
+  Map HistoryData;
   Color color = Colors.amber[400]; //temporarily setting color
 
-  foodItem({this.item_data});
+  foodItem({this.item_data, this.HistoryData});
 
   @override
   _foodItemState createState() =>
-      _foodItemState(item_data: item_data, color: color);
+      _foodItemState(item_data: item_data, color: color, HistoryData: HistoryData);
 }
 
 class _foodItemState extends State<foodItem> {
+  Map HistoryData;
   inventoryItem item_data;
   Color color;
   double min_height = 80;
 
-  _foodItemState({this.item_data, this.color});
+  _foodItemState({this.item_data, this.color, this.HistoryData});
 
   void onPressedFoodItem() {
     Navigator.pushNamed(context, '/inv_item', arguments: {
       'name': "USERNAME",
       'item_data': item_data,
+      'HistoryData': HistoryData,
     });
   }
 

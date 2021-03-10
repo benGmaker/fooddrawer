@@ -6,7 +6,7 @@ import 'dart:convert';
 class userData {
   List inventoryData;
   List<String> all_food_id;
-  Map HistoryFoodData;
+  Map HistoryData;
 
   Future<void> Login() async {
     //TODO implement login function with secure session
@@ -14,32 +14,25 @@ class userData {
 
   Future<void> LoadMainFoodData() async {
     Response response = //getting the data for main screen from server
-    await get('http://82.75.109.169/get_data_all.php?user_id=1');
+        await get('http://82.75.109.169/get_data_all.php?user_id=1');
     //TODO make this work using session login instead of passing trough user id
     List data = jsonDecode(response.body); //decoding json file
 
     inventoryData = []; //setting the inventoryData to an empty list
 
-    for (Map item in data) { //for each food item in the data create a new inventory item
+    for (Map item in data) {
+      //for each food item in the data create a new inventory item
       inventoryData.add(inventoryItem(
-          id: item['food_id'],
-          name: item['name'],
-          value: item['mass'],
-          unit: item['unit']));
+          id: item['food_id'], name: item['name'], value: item['mass'], unit: item['unit']));
     }
   }
 
-  Future<void> LoadHistoryFoodData() async {
-    if (inventoryData == null) { //if there is no inventory data this cannot be done
-      //TODO make this a catch function
-      return;
-    }
+  Future<void> LoadHistoryData() async {
+    Response response = await get('http://82.75.109.169/get_data_range.php?user_id=1&days=10');
+    HistoryData = jsonDecode(response.body);
     //TODO add get response which loads all history off food data
-    for (inventoryItem item in inventoryData){
-      String food_id = item.id;
 
-    }
-}
+  }
 }
 
 class inventoryItem {

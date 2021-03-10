@@ -9,17 +9,26 @@ class InventoryItemPage extends StatefulWidget {
 }
 
 class _InventoryItemPageState extends State<InventoryItemPage> {
-  Map data = {};
+  List HistoryData;
+  Map data= {};
+  inventoryItem item_data;
+
+  _InventoryItemPageState() {
+  }
 
   @override
   Widget build(BuildContext context) {
     data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
-    inventoryItem inv_item = data['item_data'];
+    item_data = data['item_data'];
+    Map H = data['HistoryData'];
+    HistoryData = H[item_data.id];
+    print(HistoryData);
+
 
     return Scaffold(
-      appBar: CustomAppBar(Title: inv_item.name),
+      appBar: CustomAppBar(Title: item_data.name),
       body: Text(
-        inv_item.name,
+        item_data.name,
         textAlign: TextAlign.center,
         overflow: TextOverflow.ellipsis,
         style: TextStyle(fontWeight: FontWeight.bold),

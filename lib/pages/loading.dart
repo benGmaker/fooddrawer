@@ -22,7 +22,8 @@ class _LoadingState extends State<Loading> {
     return Scaffold(
         backgroundColor: Colors.blue[900],
         body: Center(
-            child: SpinKitFadingCube( //loading icon
+            child: SpinKitFadingCube(
+          //loading icon
           color: Colors.white,
           size: 50.0,
         )));
@@ -31,13 +32,16 @@ class _LoadingState extends State<Loading> {
   void perform_login() async {
     //function for retrieving login data
     userData instance = userData();
+    //loading all data is executed first but is not necessarily finished earlier than LoadMainData
+    //This is because we don't wait on LoadAllData
+    instance.LoadHistoryData();
     await instance.LoadMainFoodData();
-    print(instance.inventoryData);
 
     //when the login is performed succesfully we go to the home screen
     Navigator.pushReplacementNamed(context, '/home', arguments: {
       'name': "USERNAME",
       'inventoryData': instance.inventoryData,
+      'HistoryData': instance.HistoryData,
     });
   }
 }
