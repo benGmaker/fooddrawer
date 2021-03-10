@@ -29,6 +29,7 @@ class userData {
 
   Future<void> LoadHistoryData() async {
     Response response = await get('http://82.75.109.169/get_data_range.php?user_id=1&days=10');
+    await Future.delayed(const Duration(seconds: 20));
     HistoryData = jsonDecode(response.body);
     //TODO add get response which loads all history off food data
 
