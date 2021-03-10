@@ -1,4 +1,5 @@
 //class to retrieve data from server and or local storage.
+
 import 'package:http/http.dart';
 import 'dart:convert';
 
@@ -6,6 +7,10 @@ class userData {
   List inventoryData;
   List<String> all_food_id;
   Map HistoryFoodData;
+
+  Future<void> Login() async {
+    //TODO implement login function with secure session
+  }
 
   Future<void> LoadMainFoodData() async {
     Response response = //getting the data for main screen from server
@@ -31,7 +36,7 @@ class userData {
     }
     //TODO add get response which loads all history off food data
     for (inventoryItem item in inventoryData){
-      int food_id = item.id;
+      String food_id = item.id;
 
     }
 }

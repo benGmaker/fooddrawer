@@ -11,18 +11,21 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Map data = {};
-  int _selectedIndex = 1;
+  //state object of the Home screen
+  Map data = {}; //empty map for the data to be stored in
+  int _selectedIndex = 1; //index of the starting screen
 
   void _OnNavItemTaped(int index) {
+    //This function is exectuded when the navigation bar is tapped
     setState(() {
       _selectedIndex = index;
     });
   }
 
-  List<Widget> _children;
+  List<Widget> _children; //List with homeScreen widgets
 
   void getChilderen() {
+    //Builds or Rebuilds the widgets in the children list,
     _children = [
       OptionsList(),
       FoodList(data: data),
@@ -30,6 +33,7 @@ class _HomeState extends State<Home> {
     ];
   }
 
+  //List containing the widgets of the navigation bar
   final List<BottomNavigationBarItem> navBarItems =
       const <BottomNavigationBarItem>[
     BottomNavigationBarItem(
@@ -47,9 +51,9 @@ class _HomeState extends State<Home> {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { //the home screen widget builder
     data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
-    getChilderen(); //retrieves current state of children
+    getChilderen(); //retreives current state of children
 
     return Scaffold(
       appBar: CustomAppBar(HasBackButton: false),

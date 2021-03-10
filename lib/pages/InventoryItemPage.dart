@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:fooddrawer/template/basic_elements.dart';
 import 'package:fooddrawer/services/getData.dart';
 
-class InventoryItemPage
-    extends StatefulWidget {
+class InventoryItemPage extends StatefulWidget {
+  //Page to view an inventory item with more detail
   @override
   _InventoryItemPageState createState() => _InventoryItemPageState();
 }
 
-class _InventoryItemPageState extends State<InventoryItemPage>{
+class _InventoryItemPageState extends State<InventoryItemPage> {
   Map data = {};
 
   @override
@@ -27,5 +27,3 @@ class _InventoryItemPageState extends State<InventoryItemPage>{
     );
   }
 }
-
-

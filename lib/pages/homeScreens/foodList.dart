@@ -3,6 +3,7 @@ import 'package:fooddrawer/services/getData.dart';
 
 class FoodList extends StatefulWidget {
   Map data;
+
   FoodList({this.data});
 
   @override
@@ -38,10 +39,9 @@ class _FoodListState extends State<FoodList> {
 class foodItem extends StatefulWidget {
   inventoryItem item_data;
 
-  Color color = Colors.amber[400];//temporarily setting color, will be user setting
+  Color color = Colors.amber[400]; //temporarily setting color
 
   foodItem({this.item_data});
-
 
   @override
   _foodItemState createState() =>
@@ -54,14 +54,14 @@ class _foodItemState extends State<foodItem> {
   double min_height = 80;
 
   _foodItemState({this.item_data, this.color});
+
   void onPressedFoodItem() {
-    print('Boomer heeft knopje gedrukt');
     Navigator.pushNamed(context, '/inv_item', arguments: {
       'name': "USERNAME",
       'item_data': item_data,
     });
-
   }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
