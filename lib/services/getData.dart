@@ -5,43 +5,36 @@ import 'dart:convert';
 class userData {
   List inventoryData;
   List<String> all_food_id;
+  Map HistoryFoodData;
 
-  Future<void> loadData() async {
-    Response response = await get('http://82.75.109.169/get_food.php?user_id=2');
-    List food_data = jsonDecode(response.body);
-    if (food_data.length == 0){
-      return; //in the case that there is no food the function ends here
+  Future<void> LoadMainFoodData() async {
+    Response response = //getting the data for main screen from server
+    await get('http://82.75.109.169/get_data_all.php?user_id=1');
+    //TODO make this work using session login instead of passing trough user id
+    List data = jsonDecode(response.body); //decoding json file
+
+    inventoryData = []; //setting the inventoryData to an empty list
+
+    for (Map item in data) { //for each food item in the data create a new inventory item
+      inventoryData.add(inventoryItem(
+          id: item['food_id'],
+          name: item['name'],
+          value: item['mass'],
+          unit: item['unit']));
     }
-    all_food_id = [];
-    inventoryData = [];
-
-    //List food = [22, 22, 11, 22, 22];
-    var future_inventoryData = <Future>[];
-    for (Map food_id_map in food_data) {
-      String food_id = food_id_map['food_id']; //converting the food id map to a food id string
-      all_food_id.add(food_id); //adding food id to the list
-
-      future_inventoryData.add(get_InventoryItem(food_id));
-    }
-
-    inventoryData = await Future.wait(
-        future_inventoryData); //waiting for all inventory data to be loaded
   }
 
-  Future<inventoryItem> get_InventoryItem(String food_id) async {
-    Response response = await get('http://82.75.109.169/get_data.php?food_id=$food_id');
-    List response_data = jsonDecode(response.body);
-    if (response_data.length == 0) {
-      return inventoryItem();
+  Future<void> LoadHistoryFoodData() async {
+    if (inventoryData == null) { //if there is no inventory data this cannot be done
+      //TODO make this a catch function
+      return;
     }
-    Map data = response_data[0];
-    return inventoryItem(
-        id: data['food_id'],
-        name: data['name'],
-        value: data['mass'],
-        unit: data['unit']
-    );
-  }
+    //TODO add get response which loads all history off food data
+    for (inventoryItem item in inventoryData){
+      int food_id = item.id;
+
+    }
+}
 }
 
 class inventoryItem {

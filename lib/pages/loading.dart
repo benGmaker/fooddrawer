@@ -30,7 +30,7 @@ class _LoadingState extends State<Loading> {
     //function for retreving login data
     //temporarily a timer
     userData instance = userData();
-    await instance.loadData();
+    await instance.LoadMainFoodData();
     print(instance.inventoryData);
 
     await Future.delayed(

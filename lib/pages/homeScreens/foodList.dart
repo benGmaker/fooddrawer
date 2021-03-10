@@ -3,10 +3,7 @@ import 'package:fooddrawer/services/getData.dart';
 
 class FoodList extends StatefulWidget {
   Map data;
-
-  FoodList(Map data) {
-    this.data = data;
-  }
+  FoodList({this.data});
 
   @override
   _FoodListState createState() => _FoodListState(data);
@@ -24,7 +21,7 @@ class _FoodListState extends State<FoodList> {
   void getChildren() {
     children = [];
     for (var item in data["inventoryData"]) {
-      children.add(foodItem(item_data: item, color: Colors.amber[400]));
+      children.add(foodItem(item_data: item));
     }
   }
 
@@ -40,9 +37,11 @@ class _FoodListState extends State<FoodList> {
 
 class foodItem extends StatefulWidget {
   inventoryItem item_data;
-  Color color;
 
-  foodItem({this.item_data, this.color});
+  Color color = Colors.amber[400];//temporarily setting color, will be user setting
+
+  foodItem({this.item_data});
+
 
   @override
   _foodItemState createState() =>
@@ -57,6 +56,10 @@ class _foodItemState extends State<foodItem> {
   _foodItemState({this.item_data, this.color});
   void onPressedFoodItem() {
     print('Boomer heeft knopje gedrukt');
+    Navigator.pushNamed(context, '/inv_item', arguments: {
+      'name': "USERNAME",
+      'item_data': item_data,
+    });
 
   }
   @override

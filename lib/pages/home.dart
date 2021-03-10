@@ -12,8 +12,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   Map data = {};
-  Color Primary_Color = Colors.amber[600];
-
   int _selectedIndex = 1;
 
   void _OnNavItemTaped(int index) {
@@ -27,7 +25,7 @@ class _HomeState extends State<Home> {
   void getChilderen() {
     _children = [
       OptionsList(),
-      FoodList(data),
+      FoodList(data: data),
       PlaceholderWidget(Colors.green),
     ];
   }
@@ -54,12 +52,12 @@ class _HomeState extends State<Home> {
     getChilderen(); //retrieves current state of children
 
     return Scaffold(
-      appBar: CustomAppBar(Primary_Color: Primary_Color),
+      appBar: CustomAppBar(HasBackButton: false),
       body: _children[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: navBarItems,
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Theme.of(context).primaryColor,
         onTap: _OnNavItemTaped,
       ),
     );

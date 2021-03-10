@@ -7,11 +7,10 @@ class ShoppingList extends StatefulWidget {
 }
 
 class _ShoppingListState extends State<ShoppingList> {
-  Color Primary_Color = Colors.amber[600];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(Primary_Color: Primary_Color),
+      appBar: CustomAppBar(),
 
 
     );
