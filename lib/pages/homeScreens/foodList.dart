@@ -55,50 +55,54 @@ class _foodItemState extends State<foodItem> {
   double min_height = 80;
 
   _foodItemState({this.item_data, this.color});
+  void onPressedFoodItem() {
+    print('Boomer heeft knopje gedrukt');
 
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
-          onPressed: () => {},
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Icon(Icons.fastfood_rounded),
-              //starting symbol or picture
-              SizedBox(width: 0, height: min_height),
-              //using a one dimension sized box to set the height of the item
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
-                      item_data.name,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      item_data.value + "  " + item_data.unit,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(),
-                    ),
-                  ],
-                ),
+        onPressed: () => {onPressedFoodItem()},
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(Icons.fastfood_rounded),
+            //starting symbol or picture
+            SizedBox(width: 0, height: min_height),
+            //using a one dimension sized box to set the height of the item
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    item_data.name,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    item_data.value + "  " + item_data.unit,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(),
+                  ),
+                ],
               ),
+            ),
 
-              IconButton(
-                //ending item
-                icon: Icon(Icons.edit),
-                color: Colors.white,
-                onPressed: () {},
-              ),
-            ],
-          ),
-          style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(color))),
+            IconButton(
+              //ending item
+              icon: Icon(Icons.edit),
+              color: Colors.white,
+              onPressed: () => onPressedFoodItem(),
+            ),
+          ],
+        ),
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(color)),
+      ),
     );
   }
 }
