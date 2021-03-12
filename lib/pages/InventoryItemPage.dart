@@ -30,7 +30,7 @@ class _InventoryItemPageState extends State<InventoryItemPage> {
     instance.inventoryData[item_id].name = "wow";
 
     return Scaffold(
-      appBar: CustomAppBar(Title: item_data.name),
+      appBar: CustomAppBar(Title: item_data.name, LeadingType: "Back"),
       body: Text(
         item_data.name,
         textAlign: TextAlign.center,
