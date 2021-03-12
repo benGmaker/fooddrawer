@@ -15,6 +15,15 @@ class _HomeState extends State<Home> {
   //state object of the Home screen
   Map data = {}; //empty map for the data to be stored in
   int _selectedIndex = 1; //index of the starting screen
+  List<String> LeadingTypes;
+  String LeadingType;
+  List<Widget> _children; //List with homeScreen widgets
+  ScrollController scrollController;
+
+  _HomeState() {
+    LeadingTypes = ["Space", "Refresh", "Space"];
+    scrollController = ScrollController();
+  }
 
   void _OnNavItemTaped(int index) {
     //This function is exectuded when the navigation bar is tapped
@@ -22,9 +31,6 @@ class _HomeState extends State<Home> {
       _selectedIndex = index;
     });
   }
-
-  List<Widget> _children; //List with homeScreen widgets
-  ScrollController scrollController = ScrollController();
 
   void getChilderen() {
     //Builds or Rebuilds the widgets in the children list,
@@ -37,7 +43,7 @@ class _HomeState extends State<Home> {
 
   //List containing the widgets of the navigation bar
   final List<BottomNavigationBarItem> navBarItems =
-      const <BottomNavigationBarItem>[
+  const <BottomNavigationBarItem>[
     BottomNavigationBarItem(
       icon: Icon(Icons.settings),
       label: 'Quick settings',
@@ -55,16 +61,22 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     //the home screen widget builder
-    data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
+    data = data.isNotEmpty ? data : ModalRoute
+        .of(context)
+        .settings
+        .arguments;
     getChilderen(); //retreives current state of children
-
+    LeadingType = LeadingTypes[_selectedIndex];
     return Scaffold(
-      appBar: CustomAppBar(LeadingType: "Refresh", scrollController: scrollController),
+      appBar: CustomAppBar(LeadingType: LeadingType,
+          scrollController: scrollController),
       body: _children[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: navBarItems,
         currentIndex: _selectedIndex,
-        selectedItemColor: Theme.of(context).primaryColor,
+        selectedItemColor: Theme
+            .of(context)
+            .primaryColor,
         onTap: _OnNavItemTaped,
       ),
     );

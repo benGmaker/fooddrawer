@@ -46,6 +46,10 @@ class _CustomAppBarState extends State<CustomAppBar> {
       "Back": BackButton(
         color: secondaryColor,
       ),
+      "Space": Opacity(
+        opacity: 0.0,
+        child: Icon(Icons.no_food),
+      ),
       "Empty": null,
     };
   }
