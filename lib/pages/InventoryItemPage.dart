@@ -26,6 +26,7 @@ class _InventoryItemPageState extends State<InventoryItemPage> {
     item_id = data['item_id'];
     item_data = instance.inventoryData[item_id];
 
+    instance.inventoryData[item_id].name = "wow"; //example how to change the data, this gets updated for the whole application
 
     return Scaffold(
       appBar: CustomAppBar(Title: item_data.name),
