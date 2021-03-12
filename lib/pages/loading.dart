@@ -34,7 +34,7 @@ class _LoadingState extends State<Loading> {
     userData instance = userData();
     //loading all data is executed first but is not necessarily finished earlier than LoadMainData
     //This is because we don't wait on LoadAllData
-    instance.LoadHistoryData();
+    //instance.LoadHistoryData();
     await instance.LoadMainFoodData();
 
     //when the login is performed succesfully we go to the home screen

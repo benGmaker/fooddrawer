@@ -7,18 +7,40 @@ class userData {
   List inventoryData;
   List<String> all_food_id;
   Map HistoryData;
+  bool offline_mode = true;
+
+  List stored_inv_data = [inventoryItem(
+    id: "11",
+    name: "Banana",
+    value: "300",
+    unit: "g",
+  ),
+    inventoryItem(
+      id: "22",
+      name: "Beer",
+      value: "200",
+      unit: "te weinig",
+    )
+  ];
 
   Future<void> Login() async {
     //TODO implement login function with secure session
   }
 
   Future<void> LoadMainFoodData() async {
+
     Response response = //getting the data for main screen from server
         await get('http://82.75.109.169/get_data_all.php?user_id=1');
     //TODO make this work using session login instead of passing trough user id
     List data = jsonDecode(response.body); //decoding json file
 
     inventoryData = []; //setting the inventoryData to an empty list
+
+    if (offline_mode) {
+        inventoryData = stored_inv_data;
+        return;
+      };
+
 
     for (Map item in data) {
       //for each food item in the data create a new inventory item
