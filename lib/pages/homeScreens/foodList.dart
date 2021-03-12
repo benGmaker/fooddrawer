@@ -31,10 +31,9 @@ class _FoodListState extends State<FoodList> {
     }
   }
 
-
   //TODO add refresh from refresh button
   RefreshController _refreshController =
-  RefreshController(initialRefresh: false);
+      RefreshController(initialRefresh: false);
 
   Future<void> reloadData() async {
     instance.LoadHistoryData();
@@ -55,7 +54,6 @@ class _FoodListState extends State<FoodList> {
     getChildren();
     return SmartRefresher(
       enablePullDown: true,
-      enablePullUp: false,
       header: WaterDropHeader(),
       controller: _refreshController,
       onRefresh: _onRefresh,

@@ -6,7 +6,6 @@ import 'package:fooddrawer/pages/homeScreens/ShoppingList.dart';
 import 'package:fooddrawer/services/getData.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -25,8 +24,6 @@ class _HomeState extends State<Home> {
   }
 
   List<Widget> _children; //List with homeScreen widgets
-
-
 
   void getChilderen() {
     //Builds or Rebuilds the widgets in the children list,
@@ -54,10 +51,9 @@ class _HomeState extends State<Home> {
     ),
   ];
 
-
-
   @override
-  Widget build(BuildContext context) { //the home screen widget builder
+  Widget build(BuildContext context) {
+    //the home screen widget builder
     data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
     getChilderen(); //retreives current state of children
 
