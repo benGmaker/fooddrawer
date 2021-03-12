@@ -52,7 +52,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
 
   Future<void> ScrollReload() async {
     //TODO set a pretier curve for this animation
-    scrollController.animateTo(-120, duration: Duration(seconds:1), curve: Curves.easeInExpo);
+    scrollController.animateTo(-120, duration: Duration(milliseconds: 400), curve: Curves.easeOutExpo);
   }
   
   @override
