@@ -21,9 +21,9 @@ class _FoodListState extends State<FoodList> {
   void getChildren() {
     children = [];
     instance = data["instance"];
-    for (inventoryItem item in instance.inventoryData) {
+    for (String food_id in instance.all_food_id) {
 
-      children.add(foodItem(item_data: item, instance: instance));
+      children.add(foodItem(item_id: food_id, instance: instance));
     }
   }
 
@@ -38,35 +38,36 @@ class _FoodListState extends State<FoodList> {
 }
 
 class foodItem extends StatefulWidget {
-  inventoryItem item_data;
+  String item_id;
   userData instance;
   Color color = Colors.amber[400]; //temporarily setting color
 
-  foodItem({this.item_data, this.instance});
+  foodItem({this.item_id, this.instance});
 
   @override
   _foodItemState createState() =>
-      _foodItemState(item_data: item_data, color: color, instance: instance);
+      _foodItemState(item_id: item_id, color: color, instance: instance);
 }
 
 class _foodItemState extends State<foodItem> {
   userData instance;
-  inventoryItem item_data;
+  String item_id;
   Color color;
   double min_height = 80;
-
-  _foodItemState({this.item_data, this.color, this.instance});
+  inventoryItem inv_item;
+  _foodItemState({this.item_id, this.color, this.instance});
 
   void onPressedFoodItem() {
     Navigator.pushNamed(context, '/inv_item', arguments: {
       'name': "USERNAME",
-      'item_data': item_data,
+      'item_id': item_id,
       'instance': instance,
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    inv_item = instance.inventoryData[item_id];
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
@@ -83,13 +84,13 @@ class _foodItemState extends State<foodItem> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    item_data.name,
+                    inv_item.name,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    item_data.value + "  " + item_data.unit,
+                    inv_item.value + "  " + inv_item.unit,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(),

@@ -4,7 +4,7 @@ import 'package:http/http.dart';
 import 'dart:convert';
 
 class userData {
-  List inventoryData;
+  Map inventoryData;
   List<String> all_food_id;
   Map HistoryData;
   bool offline_mode = true;
@@ -34,24 +34,22 @@ class userData {
     //TODO make this work using session login instead of passing trough user id
     List data = jsonDecode(response.body); //decoding json file
 
-    inventoryData = []; //setting the inventoryData to an empty list
+    inventoryData = Map(); //setting the inventoryData to an empty list
+    all_food_id = [];
 
-    if (offline_mode) {
-        inventoryData = stored_inv_data;
-        return;
-      };
 
 
     for (Map item in data) {
       //for each food item in the data create a new inventory item
-      inventoryData.add(inventoryItem(
+      all_food_id.add(item['food_id']);
+      inventoryData[item['food_id']] = (inventoryItem(
           id: item['food_id'], name: item['name'], value: item['mass'], unit: item['unit']));
     }
   }
 
   Future<void> LoadHistoryData() async {
     Response response = await get('http://82.75.109.169/get_data_range.php?user_id=1&days=10');
-    await Future.delayed(const Duration(seconds: 20));
+    //await Future.delayed(const Duration(seconds: 20));
     HistoryData = jsonDecode(response.body);
     //TODO add get response which loads all history off food data
 

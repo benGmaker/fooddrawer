@@ -11,6 +11,7 @@ class InventoryItemPage extends StatefulWidget {
 class _InventoryItemPageState extends State<InventoryItemPage> {
   userData instance;
   Map data = {};
+  String item_id;
   inventoryItem item_data;
 
   _InventoryItemPageState() {}
@@ -21,8 +22,9 @@ class _InventoryItemPageState extends State<InventoryItemPage> {
   @override
   Widget build(BuildContext context) {
     data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
-    item_data = data['item_data'];
-
+    instance = data['instance'];
+    item_id = data['item_id'];
+    item_data = instance.inventoryData[item_id];
 
 
     return Scaffold(
