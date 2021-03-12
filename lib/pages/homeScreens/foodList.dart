@@ -5,20 +5,23 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class FoodList extends StatefulWidget {
   Map data;
+  ScrollController scrollController;
 
-  FoodList({this.data});
+  FoodList({this.data, this.scrollController});
 
   @override
-  _FoodListState createState() => _FoodListState(data: data);
+  _FoodListState createState() => _FoodListState(data: data, scrollController: scrollController);
 }
 
 class _FoodListState extends State<FoodList> {
   Map data;
   userData instance;
+  ScrollController scrollController;
 
   //initializer
   _FoodListState({
     this.data,
+    this.scrollController
   });
 
   List<Widget> children;
@@ -49,6 +52,8 @@ class _FoodListState extends State<FoodList> {
     _refreshController.refreshCompleted();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     getChildren();
@@ -60,6 +65,7 @@ class _FoodListState extends State<FoodList> {
       child: ListView(
         padding: const EdgeInsets.all(8),
         children: children,
+        controller: scrollController,
       ),
     );
   }

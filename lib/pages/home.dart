@@ -24,12 +24,13 @@ class _HomeState extends State<Home> {
   }
 
   List<Widget> _children; //List with homeScreen widgets
+  ScrollController scrollController = ScrollController();
 
   void getChilderen() {
     //Builds or Rebuilds the widgets in the children list,
     _children = [
       OptionsList(),
-      FoodList(data: data),
+      FoodList(data: data, scrollController: scrollController),
       PlaceholderWidget(Colors.green),
     ];
   }
@@ -58,7 +59,7 @@ class _HomeState extends State<Home> {
     getChilderen(); //retreives current state of children
 
     return Scaffold(
-      appBar: CustomAppBar(LeadingType: "Empty"),
+      appBar: CustomAppBar(LeadingType: "Refresh", scrollController: scrollController),
       body: _children[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: navBarItems,

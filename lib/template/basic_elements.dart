@@ -5,11 +5,11 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   //Passing trough all information
   String Title;
   String LeadingType;
-  Function onLeadingPressed;
+  ScrollController scrollController;
   CustomAppBar({Key key,
     this.Title: "Fooddrawer",
     this.LeadingType = "Empty",
-    this.onLeadingPressed,
+    this.scrollController,
   })
       : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
@@ -18,27 +18,26 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final Size preferredSize; // default is 56.0
 
   @override
-  _CustomAppBarState createState() => _CustomAppBarState(Title: Title, LeadingType: LeadingType, onLeadingPressed: onLeadingPressed);
+  _CustomAppBarState createState() => _CustomAppBarState(Title: Title, LeadingType: LeadingType, scrollController: scrollController);
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
   userData instance;
   String Title;
   String LeadingType;
-  Color secondaryColor = Colors.white;
-  Function onLeadingPressed;
+  Color secondaryColor;
+  ScrollController scrollController;
   Map leadingButton;
-
-
-
+  
   _CustomAppBarState({
     this.Title,
     this.LeadingType,
-    this.onLeadingPressed,
+    this.scrollController,
+    this.secondaryColor = Colors.white,
   }) {
     leadingButton = {
       "Refresh": IconButton(
-        onPressed: () => setState((){onLeadingPressed();}),
+        onPressed: () => {ScrollReload()},
         icon: Icon(
           Icons.refresh,
           color: secondaryColor,
@@ -51,7 +50,11 @@ class _CustomAppBarState extends State<CustomAppBar> {
     };
   }
 
-
+  Future<void> ScrollReload() async {
+    //TODO set a pretier curve for this animation
+    scrollController.animateTo(-120, duration: Duration(seconds:1), curve: Curves.easeInExpo);
+  }
+  
   @override
   Widget build(BuildContext context) {
     //The actual custom appbar
