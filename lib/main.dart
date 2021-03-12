@@ -2,6 +2,8 @@ import 'package:flutter/material.dart'; //materials package
 import 'package:fooddrawer/pages/loading.dart'; //importing pages
 import 'package:fooddrawer/pages/home.dart';
 import 'package:fooddrawer/pages/InventoryItemPage.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+
 
 void main() => runApp(MyApp()); //creates the application
 
@@ -9,6 +11,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        // this line is important
+        RefreshLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en'),
+        const Locale('zh'),
+      ],
+      localeResolutionCallback:
+          (Locale locale, Iterable<Locale> supportedLocales) {
+        //print("change language");
+        return locale;
+      },
       theme: ThemeData(
         //setting theme data this data can be pulled from the context as following
         //Theme.of(context).primaryColor

@@ -5,7 +5,12 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   //Passing trough all information
   String Title;
   String LeadingType;
-  CustomAppBar({Key key, this.Title: "Fooddrawer", this.LeadingType = "Empty"})
+  Function onLeadingPressed;
+  CustomAppBar({Key key,
+    this.Title: "Fooddrawer",
+    this.LeadingType = "Empty",
+    this.onLeadingPressed,
+  })
       : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
 
@@ -13,7 +18,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final Size preferredSize; // default is 56.0
 
   @override
-  _CustomAppBarState createState() => _CustomAppBarState(Title: Title, LeadingType: LeadingType);
+  _CustomAppBarState createState() => _CustomAppBarState(Title: Title, LeadingType: LeadingType, onLeadingPressed: onLeadingPressed);
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
@@ -21,23 +26,29 @@ class _CustomAppBarState extends State<CustomAppBar> {
   String Title;
   String LeadingType;
   Color secondaryColor = Colors.white;
-  Map leadingButton = {
-    "Refresh": IconButton(
-      onPressed: () {
-      },
-      icon: Icon(
+  Function onLeadingPressed;
+  Map leadingButton;
+
+
+
+  _CustomAppBarState({
+    this.Title,
+    this.LeadingType,
+    this.onLeadingPressed,
+  }) {
+    leadingButton = {
+      "Refresh": IconButton(
+        onPressed: () => setState((){onLeadingPressed();}),
+        icon: Icon(
           Icons.refresh,
-        color:Colors.white,
+          color: secondaryColor,
+        ),
       ),
-    ),
-    "Back": BackButton(
-      color: Colors.white,
-    ),
-    "Empty": null,
-  };
-
-
-  _CustomAppBarState({this.Title, this.LeadingType}) {
+      "Back": BackButton(
+        color: secondaryColor,
+      ),
+      "Empty": null,
+    };
   }
 
 

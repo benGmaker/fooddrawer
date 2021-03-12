@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fooddrawer/services/getData.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class FoodList extends StatefulWidget {
   Map data;
@@ -14,25 +16,80 @@ class _FoodListState extends State<FoodList> {
   Map data;
   userData instance;
 
-  _FoodListState({this.data});
-
+  //initializer
+  _FoodListState({
+    this.data,
+  });
 
   List<Widget> children;
+
   void getChildren() {
     children = [];
     instance = data["instance"];
     for (String food_id in instance.all_food_id) {
-
       children.add(foodItem(item_id: food_id, instance: instance));
     }
+  }
+
+  RefreshController _refreshController =
+  RefreshController(initialRefresh: false);
+
+  Future<void> reloadData() async {
+    instance.LoadHistoryData();
+    await instance.LoadMainFoodData();
+    setState(() => {});
+  }
+
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    await reloadData();
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    if (mounted) setState(() {});
+    _refreshController.loadComplete();
   }
 
   @override
   Widget build(BuildContext context) {
     getChildren();
-    return ListView(
-      padding: const EdgeInsets.all(8),
-      children: children,
+    return SmartRefresher(
+      enablePullDown: true,
+      enablePullUp: true,
+      header: WaterDropHeader(),
+      footer: CustomFooter(
+        builder: (BuildContext context, LoadStatus mode) {
+          Widget body;
+          if (mode == LoadStatus.idle) {
+            body = Text("pull up load");
+          } else if (mode == LoadStatus.loading) {
+            body = CupertinoActivityIndicator();
+          } else if (mode == LoadStatus.failed) {
+            body = Text("Load Failed!Click retry!");
+          } else if (mode == LoadStatus.canLoading) {
+            body = Text("release to load more");
+          } else {
+            body = Text("No more Data");
+          }
+          return Container(
+            height: 55.0,
+            child: Center(child: body),
+          );
+        },
+      ),
+      controller: _refreshController,
+      onRefresh: _onRefresh,
+      onLoading: _onLoading,
+      child: ListView(
+        padding: const EdgeInsets.all(8),
+        children: children,
+      ),
     );
   }
 }
@@ -55,6 +112,7 @@ class _foodItemState extends State<foodItem> {
   Color color;
   double min_height = 80;
   inventoryItem inv_item;
+
   _foodItemState({this.item_id, this.color, this.instance});
 
   void onPressedFoodItem() {
