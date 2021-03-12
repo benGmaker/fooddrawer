@@ -56,7 +56,7 @@ class _HomeState extends State<Home> {
     getChilderen(); //retreives current state of children
 
     return Scaffold(
-      appBar: CustomAppBar(HasBackButton: false),
+      appBar: CustomAppBar(LeadingType: "Refresh",),
       body: _children[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: navBarItems,
