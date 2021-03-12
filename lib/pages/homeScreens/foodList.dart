@@ -31,6 +31,8 @@ class _FoodListState extends State<FoodList> {
     }
   }
 
+
+  //TODO add refresh from refresh button
   RefreshController _refreshController =
   RefreshController(initialRefresh: false);
 
@@ -43,17 +45,9 @@ class _FoodListState extends State<FoodList> {
   void _onRefresh() async {
     // monitor network fetch
     await Future.delayed(Duration(milliseconds: 1000));
+    await reloadData();
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
-  }
-
-  void _onLoading() async {
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
-    await reloadData();
-    // if failed,use loadFailed(),if no data return,use LoadNodata()
-    if (mounted) setState(() {});
-    _refreshController.loadComplete();
   }
 
   @override
@@ -61,31 +55,10 @@ class _FoodListState extends State<FoodList> {
     getChildren();
     return SmartRefresher(
       enablePullDown: true,
-      enablePullUp: true,
+      enablePullUp: false,
       header: WaterDropHeader(),
-      footer: CustomFooter(
-        builder: (BuildContext context, LoadStatus mode) {
-          Widget body;
-          if (mode == LoadStatus.idle) {
-            body = Text("pull up load");
-          } else if (mode == LoadStatus.loading) {
-            body = CupertinoActivityIndicator();
-          } else if (mode == LoadStatus.failed) {
-            body = Text("Load Failed!Click retry!");
-          } else if (mode == LoadStatus.canLoading) {
-            body = Text("release to load more");
-          } else {
-            body = Text("No more Data");
-          }
-          return Container(
-            height: 55.0,
-            child: Center(child: body),
-          );
-        },
-      ),
       controller: _refreshController,
       onRefresh: _onRefresh,
-      onLoading: _onLoading,
       child: ListView(
         padding: const EdgeInsets.all(8),
         children: children,
