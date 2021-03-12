@@ -9,23 +9,20 @@ class InventoryItemPage extends StatefulWidget {
 }
 
 class _InventoryItemPageState extends State<InventoryItemPage> {
-  List HistoryData;
+  userData instance;
   Map data = {};
   inventoryItem item_data;
 
   _InventoryItemPageState() {}
 
   Future<void> getHistoryData() async {
-    Map H = await data['HistoryData'];
-    HistoryData = H[item_data.id];
   }
 
   @override
   Widget build(BuildContext context) {
     data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
     item_data = data['item_data'];
-    getHistoryData();
-    print(HistoryData);
+
 
 
     return Scaffold(

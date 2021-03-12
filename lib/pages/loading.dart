@@ -40,8 +40,7 @@ class _LoadingState extends State<Loading> {
     //when the login is performed succesfully we go to the home screen
     Navigator.pushReplacementNamed(context, '/home', arguments: {
       'name': "USERNAME",
-      'inventoryData': instance.inventoryData,
-      'HistoryData': instance.HistoryData,
+      'instance': instance,
     });
   }
 }

@@ -13,7 +13,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   //state object of the Home screen
   Map data = {}; //empty map for the data to be stored in
-  Map HistoryData = Map();
   int _selectedIndex = 1; //index of the starting screen
 
   void _OnNavItemTaped(int index) {
