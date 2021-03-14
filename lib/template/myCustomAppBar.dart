@@ -1,37 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fooddrawer/services/getData.dart';
 
-class LeadingButtons {
-  Function onRefresh;
-  Color secondaryColor;
-
-  Widget Refresh;
-  Widget Empty;
-  Widget Back;
-  Widget Space;
-
-  LeadingButtons({
-    this.onRefresh,
-    this.secondaryColor = Colors.white,
-  }) {
-    Refresh = IconButton(
-      onPressed: () => {onRefresh()},
-      icon: Icon(
-        Icons.refresh,
-        color: secondaryColor,
-      ),
-    );
-    Back = BackButton(
-      color: secondaryColor,
-    );
-    Space = Opacity(
-      opacity: 0.0,
-      child: Icon(Icons.no_food),
-    );
-    Empty = null;
-  }
-}
-
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   //Passing trough all information
   String Title; //Name displayed in appbar

@@ -5,6 +5,7 @@ import 'package:fooddrawer/pages/homeScreens/foodList.dart';
 import 'package:fooddrawer/pages/homeScreens/ShoppingList.dart';
 import 'package:fooddrawer/services/getData.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:fooddrawer/template/leadingButton.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -21,12 +22,11 @@ class _HomeState extends State<Home> {
   CustomAppBar myAppbar; //The appbar
 
   _HomeState() {
-    LeadingButtons leadingButtons =
-        LeadingButtons(onRefresh: ScrollReload);
+    leadingButtons LeadingButtons = leadingButtons();
     _LeadingButtons = [
-      leadingButtons.Space,
-      leadingButtons.Refresh,
-      leadingButtons.Space
+      LeadingButtons.Space(),
+      LeadingButtons.Refresh(ScrollReload),
+      LeadingButtons.Space(),
     ]; //setting values of the leadingTypes
     scrollController = ScrollController(); //creating the scrollcontroller
   }

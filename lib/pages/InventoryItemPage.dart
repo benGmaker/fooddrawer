@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fooddrawer/template/myCustomAppBar.dart';
 import 'package:fooddrawer/services/getData.dart';
+import 'package:fooddrawer/template/leadingButton.dart';
 
 class InventoryItemPage extends StatefulWidget {
   //Page to view an inventory item with more detail
@@ -27,7 +28,7 @@ class _InventoryItemPageState extends State<InventoryItemPage> {
 
     //example how to change the data, this gets updated for the whole application
     instance.inventoryData[item_id].name = "wow";
-    Widget leadingButton = LeadingButtons().Back;
+    Widget leadingButton = leadingButtons().Back();
     CustomAppBar myAppbar = CustomAppBar(
       Title: item_data.name,
       leadingButton: leadingButton,

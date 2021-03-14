@@ -61,7 +61,6 @@ class userData {
     //await Future.delayed(const Duration(seconds: 20));
     HistoryData = jsonDecode(response.body);
     //TODO add get response which loads all history off food data
-
   }
 }
 
