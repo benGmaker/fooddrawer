@@ -42,8 +42,17 @@ class userData {
     for (Map item in data) {
       //for each food item in the data create a new inventory item
       all_food_id.add(item['food_id']);
+      String id = item['food_id'];
+      String name =  item['name'];
+      String value = item['mass'];
+      String unit = item['unit'];
+      //TODO add more data filter and dealig with exeptions
+      if (value == null)
+        {
+          value = "0";
+        }
       inventoryData[item['food_id']] = (inventoryItem(
-          id: item['food_id'], name: item['name'], value: item['mass'], unit: item['unit']));
+          id: item['food_id'], name: item['name'], value: value, unit: item['unit']));
     }
   }
 
@@ -65,10 +74,10 @@ class inventoryItem {
 //tumbnail
 
   inventoryItem({
-    this.id,
-    this.name,
-    this.value,
-    this.unit,
+    this.id = '',
+    this.name = '',
+    this.value = '',
+    this.unit = '',
   }) {}
 
   String toString() {

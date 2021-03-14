@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fooddrawer/template/basic_elements.dart';
+import 'package:fooddrawer/template/myCustomAppBar.dart';
 import 'package:fooddrawer/pages/homeScreens/basicOptions.dart';
 import 'package:fooddrawer/pages/homeScreens/foodList.dart';
 import 'package:fooddrawer/pages/homeScreens/ShoppingList.dart';
@@ -15,14 +15,24 @@ class _HomeState extends State<Home> {
   //state object of the Home screen
   Map data = {}; //empty map for the data to be stored in
   int _selectedIndex = 1; //index of the starting screen
-  List<String> LeadingTypes;
-  String LeadingType;
+  List<Widget> LeadingButtonTypes; //types of leading buttons per homepageScreen
   List<Widget> _children; //List with homeScreen widgets
-  ScrollController scrollController;
+  ScrollController scrollController; //scrollcontroller of the listview
+  CustomAppBar myAppbar; //The appbar
 
   _HomeState() {
-    LeadingTypes = ["Space", "Refresh", "Space"];
-    scrollController = ScrollController();
+    LeadingButtons leadingButtons =
+        LeadingButtons(onLeadingPressed: ScrollReload);
+    LeadingButtonTypes = [
+      leadingButtons.Space,
+      leadingButtons.Refresh,
+      leadingButtons.Space
+    ]; //setting values of the leadingTypes
+    scrollController = ScrollController(); //creating the scrollcontroller
+    myAppbar = CustomAppBar(
+      leadingIsVariable: true,
+      getLeadingButton: getLeadingButton,
+    );
   }
 
   void _OnNavItemTaped(int index) {
@@ -30,6 +40,13 @@ class _HomeState extends State<Home> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  Future<void> ScrollReload() async {
+    //Function that scrolls up to reload
+    //TODO set a pretier curve for this animation
+    scrollController.animateTo(-120,
+        duration: Duration(milliseconds: 400), curve: Curves.easeOutExpo);
   }
 
   void getChilderen() {
@@ -41,9 +58,13 @@ class _HomeState extends State<Home> {
     ];
   }
 
+  Widget getLeadingButton() {
+    return LeadingButtonTypes[_selectedIndex]; //setting current leading button
+  }
+
   //List containing the widgets of the navigation bar
   final List<BottomNavigationBarItem> navBarItems =
-  const <BottomNavigationBarItem>[
+      const <BottomNavigationBarItem>[
     BottomNavigationBarItem(
       icon: Icon(Icons.settings),
       label: 'Quick settings',
@@ -61,22 +82,22 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     //the home screen widget builder
-    data = data.isNotEmpty ? data : ModalRoute
-        .of(context)
-        .settings
-        .arguments;
+    data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
+
     getChilderen(); //retreives current state of children
-    LeadingType = LeadingTypes[_selectedIndex];
+
+    myAppbar = CustomAppBar(
+      leadingIsVariable: true,
+      getLeadingButton: getLeadingButton,
+    );
+
     return Scaffold(
-      appBar: CustomAppBar(LeadingType: LeadingType,
-          scrollController: scrollController),
+      appBar: myAppbar,
       body: _children[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: navBarItems,
         currentIndex: _selectedIndex,
-        selectedItemColor: Theme
-            .of(context)
-            .primaryColor,
+        selectedItemColor: Theme.of(context).primaryColor,
         onTap: _OnNavItemTaped,
       ),
     );

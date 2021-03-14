@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fooddrawer/template/basic_elements.dart';
+import 'package:fooddrawer/template/myCustomAppBar.dart';
 import 'package:fooddrawer/services/getData.dart';
 
 class InventoryItemPage extends StatefulWidget {
@@ -16,8 +16,7 @@ class _InventoryItemPageState extends State<InventoryItemPage> {
 
   _InventoryItemPageState() {}
 
-  Future<void> getHistoryData() async {
-  }
+  Future<void> getHistoryData() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +27,14 @@ class _InventoryItemPageState extends State<InventoryItemPage> {
 
     //example how to change the data, this gets updated for the whole application
     instance.inventoryData[item_id].name = "wow";
+    Widget leadingButton = LeadingButtons().Back;
+    CustomAppBar myAppbar = CustomAppBar(
+      Title: item_data.name,
+      leadingButton: leadingButton,
+    );
 
     return Scaffold(
-      appBar: CustomAppBar(Title: item_data.name, LeadingType: "Back"),
+      appBar: myAppbar,
       body: Text(
         item_data.name,
         textAlign: TextAlign.center,
