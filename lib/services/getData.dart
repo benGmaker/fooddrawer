@@ -23,6 +23,11 @@ class userData {
       unit: "te weinig",
     )
   ];
+  Future<void> Changedata(String food_id, String user_id, String name, String unit, String exp_date) async {
+    Response response =
+        await get('http://82.75.109.169/change_data.php?food_id='+food_id+'user_id='+user_id+'&name='+name+'&unit='+unit+'&exp='+exp_date);
+  }
+
 
   Future<void> Login() async {
     //TODO implement login function with secure session
