@@ -9,12 +9,13 @@ class userData {
   Map HistoryData;
   bool offline_mode = true;
 
-  List stored_inv_data = [inventoryItem(
-    id: "11",
-    name: "Banana",
-    value: "300",
-    unit: "g",
-  ),
+  List stored_inv_data = [
+    inventoryItem(
+      id: "11",
+      name: "Banana",
+      value: "300",
+      unit: "g",
+    ),
     inventoryItem(
       id: "22",
       name: "Beer",
@@ -28,7 +29,6 @@ class userData {
   }
 
   Future<void> LoadMainFoodData() async {
-
     Response response = //getting the data for main screen from server
         await get('http://82.75.109.169/get_data_all.php?user_id=1');
     //TODO make this work using session login instead of passing trough user id
@@ -36,24 +36,30 @@ class userData {
 
     inventoryData = Map(); //setting the inventoryData to an empty list
     all_food_id = [];
-
-
-
+    print(data);
     for (Map item in data) {
       //for each food item in the data create a new inventory item
       all_food_id.add(item['food_id']);
-      String id = item['food_id'];
-      String name =  item['name'];
       String value = item['mass'];
-      String unit = item['unit'];
+
       //TODO add more data filter and dealig with exeptions
-      if (value == null)
-        {
-          value = "0";
-        }
+
+      if (value == null) {
+        value = "0";
+      }
+      bool isAdded = true; //setting wether or not the inventory item is added
+      if (item['user_id'] == null) {
+        isAdded = false;
+      }
       inventoryData[item['food_id']] = (inventoryItem(
-          id: item['food_id'], name: item['name'], value: value, unit: item['unit']));
+          id: item['food_id'],
+          name: item['name'],
+          value: value,
+          unit: item['unit'],
+          isAdded: isAdded));
     }
+    print(all_food_id);
+    print(inventoryData);
   }
 
   Future<void> LoadHistoryData() async {
@@ -69,6 +75,7 @@ class inventoryItem {
   String name;
   String value;
   String unit;
+  bool isAdded;
 
 //tumbnail
 
@@ -77,9 +84,10 @@ class inventoryItem {
     this.name = '',
     this.value = '',
     this.unit = '',
+    this.isAdded = true,
   }) {}
 
   String toString() {
-    return "inventoryItem: [id: $id, name: $name, value: $value, unit: $unit]";
+    return "inventoryItem: [id: $id, name: $name, value: $value, unit: $unit, isAdded: $isAdded]";
   }
 }

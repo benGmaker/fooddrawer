@@ -27,7 +27,7 @@ class _InventoryItemPageState extends State<InventoryItemPage> {
     item_data = instance.inventoryData[item_id];
 
     //example how to change the data, this gets updated for the whole application
-    instance.inventoryData[item_id].name = "wow";
+    //instance.inventoryData[item_id].name = "wow";
     Widget leadingButton = leadingButtons().Back();
     CustomAppBar myAppbar = CustomAppBar(
       Title: item_data.name,

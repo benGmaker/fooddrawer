@@ -21,6 +21,7 @@ class _HomeState extends State<Home> {
   ScrollController scrollController; //scrollcontroller of the listview
   CustomAppBar myAppbar; //The appbar
 
+
   _HomeState() {
     leadingButtons LeadingButtons = leadingButtons();
     _LeadingButtons = [
@@ -60,8 +61,7 @@ class _HomeState extends State<Home> {
   }
 
   //List containing the widgets of the navigation bar
-  final List<BottomNavigationBarItem> navBarItems =
-      const <BottomNavigationBarItem>[
+  final List<BottomNavigationBarItem> navBarItems = const <BottomNavigationBarItem>[
     BottomNavigationBarItem(
       icon: Icon(Icons.settings),
       label: 'Quick settings',
