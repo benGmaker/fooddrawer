@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fooddrawer/template/myCustomAppBar.dart';
 import 'package:fooddrawer/services/getData.dart';
 import 'package:fooddrawer/template/leadingButton.dart';
+import 'package:fooddrawer/template/editVariableBox.dart';
 
 class InventoryItemPage extends StatefulWidget {
   //Page to view an inventory item with more detail
@@ -14,13 +15,29 @@ class _InventoryItemPageState extends State<InventoryItemPage> {
   Map data = {};
   String item_id;
   inventoryItem item_data;
+  ScrollController scrollController;
 
-  _InventoryItemPageState() {}
+  _InventoryItemPageState() {
+    scrollController = ScrollController();
+
+
+  }
 
   Future<void> getHistoryData() async {}
 
+  List<Widget> children;
+  void getChildren() {
+    children = [
+      editVariableBox(instance: instance, item_id: item_id, varName: "Name", varDisp: item_data.name),
+      editVariableBox(instance: instance, item_id: item_id, varName: "Experiation", varDisp: "(14-3-2021)"),
+      editVariableBox(instance: instance, item_id: item_id, varName: "Unit", varDisp: item_data.unit),
+
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
+
     data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
     instance = data['instance'];
     item_id = data['item_id'];
@@ -33,15 +50,18 @@ class _InventoryItemPageState extends State<InventoryItemPage> {
       Title: item_data.name,
       leadingButton: leadingButton,
     );
+    getChildren();
 
     return Scaffold(
+
       appBar: myAppbar,
-      body: Text(
-        item_data.name,
-        textAlign: TextAlign.center,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(fontWeight: FontWeight.bold),
+      body: ListView(
+        padding: const EdgeInsets.all(8),
+        children: children,
+        controller: scrollController,
       ),
     );
   }
 }
+
+
