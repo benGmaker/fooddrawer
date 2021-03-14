@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fooddrawer/services/getData.dart';
 
 class LeadingButtons {
-  Function onLeadingPressed;
+  Function onRefresh;
   Color secondaryColor;
 
   Widget Refresh;
@@ -11,11 +11,11 @@ class LeadingButtons {
   Widget Space;
 
   LeadingButtons({
-    this.onLeadingPressed,
+    this.onRefresh,
     this.secondaryColor = Colors.white,
   }) {
     Refresh = IconButton(
-      onPressed: () => {onLeadingPressed()},
+      onPressed: () => {onRefresh()},
       icon: Icon(
         Icons.refresh,
         color: secondaryColor,
@@ -47,10 +47,11 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
     this.onLeadingPressed,
     this.secondaryColor = Colors.white,
     this.leadingButton = null,
-    this.leadingIsVariable = false,
-    this.getLeadingButton,
+    this.getLeadingButton = null,
   })  : preferredSize = Size.fromHeight(kToolbarHeight),
-        super(key: key) {}
+        super(key: key) {
+
+  }
 
   @override
   final Size preferredSize; // default is 56.0
@@ -60,8 +61,8 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
       Title: Title,
       secondaryColor: secondaryColor,
       leadingButton: leadingButton,
-      getLeadingButton: getLeadingButton,
-      leadingIsVariable: leadingIsVariable);
+      getLeadingButton: getLeadingButton
+  );
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
@@ -70,22 +71,21 @@ class _CustomAppBarState extends State<CustomAppBar> {
   Color secondaryColor;
   Widget leadingButton;
   Function getLeadingButton;
-  bool leadingIsVariable;
 
   _CustomAppBarState({
     this.Title,
     this.leadingButton,
     this.secondaryColor,
     this.getLeadingButton,
-    this.leadingIsVariable,
   }) {}
 
   @override
   Widget build(BuildContext context) {
     //The actual custom appbar
-    if (leadingIsVariable) {
-      leadingButton = getLeadingButton();
-    }
+    if (getLeadingButton != null) {
+        leadingButton = getLeadingButton();
+      }
+
 
     return AppBar(
       leading: leadingButton,

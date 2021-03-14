@@ -15,24 +15,20 @@ class _HomeState extends State<Home> {
   //state object of the Home screen
   Map data = {}; //empty map for the data to be stored in
   int _selectedIndex = 1; //index of the starting screen
-  List<Widget> LeadingButtonTypes; //types of leading buttons per homepageScreen
+  List<Widget> _LeadingButtons; //types of leading buttons per homepageScreen
   List<Widget> _children; //List with homeScreen widgets
   ScrollController scrollController; //scrollcontroller of the listview
   CustomAppBar myAppbar; //The appbar
 
   _HomeState() {
     LeadingButtons leadingButtons =
-        LeadingButtons(onLeadingPressed: ScrollReload);
-    LeadingButtonTypes = [
+        LeadingButtons(onRefresh: ScrollReload);
+    _LeadingButtons = [
       leadingButtons.Space,
       leadingButtons.Refresh,
       leadingButtons.Space
     ]; //setting values of the leadingTypes
     scrollController = ScrollController(); //creating the scrollcontroller
-    myAppbar = CustomAppBar(
-      leadingIsVariable: true,
-      getLeadingButton: getLeadingButton,
-    );
   }
 
   void _OnNavItemTaped(int index) {
@@ -50,7 +46,7 @@ class _HomeState extends State<Home> {
   }
 
   void getChilderen() {
-    //Builds or Rebuilds the widgets in the children list,
+    //Builds/Rebuilds the widgets in the children list,
     _children = [
       OptionsList(),
       FoodList(data: data, scrollController: scrollController),
@@ -59,7 +55,8 @@ class _HomeState extends State<Home> {
   }
 
   Widget getLeadingButton() {
-    return LeadingButtonTypes[_selectedIndex]; //setting current leading button
+    //returns the current leading button widget
+    return _LeadingButtons[_selectedIndex];
   }
 
   //List containing the widgets of the navigation bar
@@ -83,11 +80,8 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     //the home screen widget builder
     data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
-
     getChilderen(); //retreives current state of children
-
     myAppbar = CustomAppBar(
-      leadingIsVariable: true,
       getLeadingButton: getLeadingButton,
     );
 
