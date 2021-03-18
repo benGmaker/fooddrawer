@@ -83,6 +83,12 @@ class _editVariableBoxState extends State<editVariableBox> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  Text(
+                    varDisp,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(),
+                  ),
                   //TextField(
 
                     //obscureText: true,
