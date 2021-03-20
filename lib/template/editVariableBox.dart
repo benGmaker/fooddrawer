@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fooddrawer/services/getData.dart';
+import 'package:fooddrawer/template/editVarPopup.dart';
 
 class editVariableBox extends StatefulWidget {
   userData instance;
@@ -46,7 +47,17 @@ class _editVariableBoxState extends State<editVariableBox> {
     this.varDisp,
   }) {}
 
-  void onVarPressed() {}
+  Future<void> onVarPressed(BuildContext context) async{
+    //What happens when the variable gets pressed.
+
+    editVarPopup editVarPop = editVarPopup(setState: setState);
+    return showDialog(
+        context: context,
+        builder: editVarPop.display,
+    );
+
+
+  }
   TextEditingController _controller;
 
   @override
@@ -66,7 +77,7 @@ class _editVariableBoxState extends State<editVariableBox> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
       child: ElevatedButton(
-        onPressed: () => {onVarPressed()},
+        onPressed: () => {onVarPressed(context)},
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -107,7 +118,7 @@ class _editVariableBoxState extends State<editVariableBox> {
               //ending item
               icon: Icon(Icons.edit),
               color: Colors.white,
-              onPressed: () => onVarPressed(),
+              onPressed: () => onVarPressed(context),
             ),
           ],
         ),
