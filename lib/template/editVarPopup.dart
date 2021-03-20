@@ -3,11 +3,21 @@ import 'package:flutter/material.dart';
 
 class editVarPopup {
   Function setState;
-
+  String valueText;
+  String item_id;
+  Function changeVarData;
   editVarPopup({
     this.setState,
+    this.item_id,
+    this.changeVarData,
   }) {
     textFieldController = TextEditingController();
+  }
+
+
+  void changeData() {
+    changeVarData(item_id, valueText);
+    print(valueText);
   }
 
   TextEditingController textFieldController;
@@ -18,7 +28,7 @@ class editVarPopup {
       content: TextField(
         onChanged: (value) {
           setState(() {
-            //valueText = value;
+            valueText = value;
           });
         },
         controller: textFieldController,
@@ -41,7 +51,7 @@ class editVarPopup {
           child: Text('OK'),
           onPressed: () {
             setState(() {
-              //codeDialog = valueText;
+              changeData();
               Navigator.pop(context);
             });
           },

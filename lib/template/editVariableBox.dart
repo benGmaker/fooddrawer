@@ -7,12 +7,14 @@ class editVariableBox extends StatefulWidget {
   String item_id;
   String varName;
   String varDisp;
+  Function changeVarData;
 
   editVariableBox({
     this.instance,
     this.item_id,
     this.varName,
     this.varDisp = '',
+    this.changeVarData,
   }) {
     if (varDisp == "") {
       varDisp = varName;
@@ -25,6 +27,7 @@ class editVariableBox extends StatefulWidget {
         item_id: item_id,
         varName: varName,
         varDisp: varDisp,
+        changeVarData: changeVarData,
       );
 }
 
@@ -34,6 +37,7 @@ class _editVariableBoxState extends State<editVariableBox> {
   String item_id;
   String varName;
   String varDisp;
+  Function changeVarData;
 
   //local settings
   inventoryItem inv_item;
@@ -45,12 +49,17 @@ class _editVariableBoxState extends State<editVariableBox> {
     this.item_id,
     this.varName,
     this.varDisp,
+    this.changeVarData,
   }) {}
 
   Future<void> onVarPressed(BuildContext context) async{
     //What happens when the variable gets pressed.
 
-    editVarPopup editVarPop = editVarPopup(setState: setState);
+    editVarPopup editVarPop = editVarPopup(
+        setState: setState,
+      changeVarData: changeVarData,
+      item_id: item_id,
+    );
     return showDialog(
         context: context,
         builder: editVarPop.display,

@@ -1,5 +1,5 @@
 //class to retrieve data from server and or local storage.
-
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 
@@ -23,11 +23,31 @@ class userData {
       unit: "te weinig",
     )
   ];
-  Future<void> Changedata(String food_id, String user_id, String name, String unit, String exp_date) async {
+  Future<void> Changedata({
+    String food_id = '',
+    String user_id = '',
+    String name = '',
+    String unit = '',
+    String exp_date = '',}) async {
     Response response =
         await get('http://82.75.109.169/change_data.php?food_id='+food_id+'user_id='+user_id+'&name='+name+'&unit='+unit+'&exp='+exp_date);
   }
 
+  void set_id(item_id, String newVar) {
+    inventoryData[item_id].id = newVar;
+    Changedata(user_id: newVar);
+  }
+
+  void set_name(item_id, String newVar) {
+    inventoryData[item_id].name = newVar;
+    inventoryData[item_id].setFoodListState();
+    Changedata(user_id: newVar);
+  }
+
+  void set_unit(item_id, String newVar) {
+    inventoryData[item_id].unit = newVar;
+    Changedata(unit: newVar);
+  }
 
   Future<void> Login() async {
     //TODO implement login function with secure session
@@ -81,6 +101,7 @@ class inventoryItem {
   String value;
   String unit;
   bool isAdded;
+  Function setFoodListState;
 
 //tumbnail
 
@@ -91,6 +112,7 @@ class inventoryItem {
     this.unit = '',
     this.isAdded = true,
   }) {}
+
 
   String toString() {
     return "inventoryItem: [id: $id, name: $name, value: $value, unit: $unit, isAdded: $isAdded]";

@@ -90,6 +90,7 @@ class _foodItemState extends State<foodItem> {
   double min_height = 80;
   inventoryItem inv_item;
 
+
   _foodItemState({this.item_id, this.color, this.instance});
 
   void onPressedFoodItem() {
@@ -100,6 +101,10 @@ class _foodItemState extends State<foodItem> {
     });
   }
 
+  void setFoodListState() {
+    setState(() => {});
+  }
+
   Icon trailingIcon;
   String information;
 
@@ -107,6 +112,7 @@ class _foodItemState extends State<foodItem> {
   Widget build(BuildContext context) {
     trailingIcon = Icon(Icons.edit);
     inv_item = instance.inventoryData[item_id];
+    inv_item.setFoodListState = setFoodListState;
     information = inv_item.value + "  " + inv_item.unit;
     //checking if the iventory item has been added and if not change the displayed information
     if (inv_item.isAdded != true) {

@@ -28,9 +28,9 @@ class _InventoryItemPageState extends State<InventoryItemPage> {
   List<Widget> children;
   void getChildren() {
     children = [
-      editVariableBox(instance: instance, item_id: item_id, varName: "Name", varDisp: item_data.name),
-      editVariableBox(instance: instance, item_id: item_id, varName: "Experiation", varDisp: "(14-3-2021)"),
-      editVariableBox(instance: instance, item_id: item_id, varName: "Unit", varDisp: item_data.unit),
+      editVariableBox(instance: instance, item_id: item_id, varName: "Name", varDisp: item_data.name, changeVarData: instance.set_name,),
+      editVariableBox(instance: instance, item_id: item_id, varName: "Experiation", varDisp: "(14-3-2021)",changeVarData: ()=>{},),
+      editVariableBox(instance: instance, item_id: item_id, varName: "Unit", varDisp: item_data.unit,changeVarData: instance.set_unit,),
 
     ];
   }
