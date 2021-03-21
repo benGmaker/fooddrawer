@@ -120,7 +120,7 @@ class _foodItemState extends State<foodItem> {
       trailingIcon = Icon(Icons.add);
       information = "Instal box " + inv_item.id;
     }
-
+//TOOD add proper name wrapping when the name that is given is too long or set maximum length name
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
