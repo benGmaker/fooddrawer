@@ -36,43 +36,52 @@ class _InventoryItemPageState extends State<InventoryItemPage> {
       editVariableBox(
         invItemPageData: invItemPageData,
         varName: "Name",
-        varDisp: item_data.name,
+        getVarValue: () {return item_data.name;},
         changeVarData: instance.set_name,
       ),
       editVariableBox(
         invItemPageData: invItemPageData,
         varName: "Experiation",
-        varDisp: "(14-3-2021)",
+        getVarValue: () {return "(14-3-2021)";},
         changeVarData: () => {},
       ),
       editVariableBox(
         invItemPageData: invItemPageData,
         varName: "Unit",
-        varDisp: item_data.unit,
+        getVarValue: () {return item_data.unit;},
         changeVarData: instance.set_unit,
       ),
     ];
   }
 
   void pushUpdate() {
-    setState(() {
+    this.setState(() {
+      getData(context);
       parentPushUpdate();
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
+  void getData(BuildContext context) {
     data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
     instance = data['instance'];
     item_id = data['item_id'];
     parentPushUpdate = data['pushUpdate'];
     item_data = instance.inventoryData[item_id];
+  }
 
+  String getTitle() {
+    return item_data.name;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    getData(context);
+    print(item_data.name);
     //example how to change the data, this gets updated for the whole application
     //instance.inventoryData[item_id].name = "wow";
     Widget leadingButton = leadingButtons().Back(); //getting leading button template
     CustomAppBar myAppbar = CustomAppBar( //updating the appbar
-      Title: item_data.name,
+      getTitle: () {return item_data.name;},
       leadingButton: leadingButton,
     );
     getChildren(); //update children

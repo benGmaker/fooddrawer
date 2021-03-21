@@ -7,6 +7,7 @@ class editVarPopup {
   String item_id;
   Function changeVarData;
   Function pushUpdate;
+
   editVarPopup({
     this.item_id,
     this.changeVarData,
@@ -16,10 +17,8 @@ class editVarPopup {
     textFieldController = TextEditingController();
   }
 
-
-  Future<void> changeData() async {
+  Future<void> changeData(context) async {
     changeVarData(item_id, valueText);
-    //await Future.delayed(Duration(seconds: 1));
     pushUpdate();
   }
 
@@ -52,11 +51,9 @@ class editVarPopup {
           color: Colors.green,
           textColor: Colors.white,
           child: Text('OK'),
-          onPressed: () {
-            setState(() {
-              changeData();
-              Navigator.pop(context);
-            });
+          onPressed: ()  {
+            changeData(context);
+            Navigator.pop(context);
           },
         ),
       ],

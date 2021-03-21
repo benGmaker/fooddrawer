@@ -8,6 +8,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   Widget leadingButton;
   Function onLeadingPressed;
   Function getLeadingButton;
+  Function getTitle;
   bool leadingIsVariable;
 
   CustomAppBar({
@@ -17,6 +18,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
     this.secondaryColor = Colors.white,
     this.leadingButton = null,
     this.getLeadingButton = null,
+    this.getTitle = null,
   })  : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key) {
 
@@ -30,7 +32,8 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
       Title: Title,
       secondaryColor: secondaryColor,
       leadingButton: leadingButton,
-      getLeadingButton: getLeadingButton
+      getLeadingButton: getLeadingButton,
+      getTitle: getTitle,
   );
 }
 
@@ -40,12 +43,14 @@ class _CustomAppBarState extends State<CustomAppBar> {
   Color secondaryColor;
   Widget leadingButton;
   Function getLeadingButton;
+  Function getTitle;
 
   _CustomAppBarState({
     this.Title,
     this.leadingButton,
     this.secondaryColor,
     this.getLeadingButton,
+    this.getTitle,
   }) {}
 
   @override
@@ -54,7 +59,9 @@ class _CustomAppBarState extends State<CustomAppBar> {
     if (getLeadingButton != null) {
         leadingButton = getLeadingButton();
       }
-
+    if (getTitle != null) {
+      Title = getTitle();
+    }
 
     return AppBar(
       leading: leadingButton,

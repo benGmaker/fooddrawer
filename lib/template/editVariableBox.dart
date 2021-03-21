@@ -7,7 +7,6 @@ class InvItemPageData {
   userData instance;
   String item_id;
   Function pushUpdate;
-
   InvItemPageData({
     this.instance,
     this.item_id,
@@ -18,24 +17,21 @@ class InvItemPageData {
 class editVariableBox extends StatefulWidget {
   InvItemPageData invItemPageData;
   String varName;
-  String varDisp;
   Function changeVarData;
+  Function getVarValue;
 
   editVariableBox({
     this.invItemPageData,
+    this.getVarValue,
     this.varName,
-    this.varDisp = '',
     this.changeVarData,
   }) {
-    if (varDisp == "") {
-      varDisp = varName;
-    }
   }
 
   @override
   _editVariableBoxState createState() => _editVariableBoxState(
+        getVarValue: getVarValue,
         varName: varName,
-        varDisp: varDisp,
         changeVarData: changeVarData,
         invItemPageData: invItemPageData,
       );
@@ -49,6 +45,7 @@ class _editVariableBoxState extends State<editVariableBox> {
   String varDisp;
   Function changeVarData;
   Function parentPushUpdate;
+  Function getVarValue;
   InvItemPageData invItemPageData;
 
   //local settings
@@ -58,7 +55,7 @@ class _editVariableBoxState extends State<editVariableBox> {
 
   _editVariableBoxState({
     this.varName,
-    this.varDisp,
+    this.getVarValue,
     this.changeVarData,
     this.invItemPageData,
   }) {
@@ -71,6 +68,8 @@ class _editVariableBoxState extends State<editVariableBox> {
       invItemPageData.pushUpdate();
     });
   }
+
+
 
   Future<void> onVarPressed(BuildContext context) async {
     //What happens when the variable gets pressed.
@@ -103,6 +102,7 @@ class _editVariableBoxState extends State<editVariableBox> {
 
   Widget build(BuildContext context) {
     inv_item = instance.inventoryData[item_id];
+    varDisp = getVarValue();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
       child: ElevatedButton(
