@@ -98,11 +98,13 @@ class _foodItemState extends State<foodItem> {
       'name': "USERNAME",
       'item_id': item_id,
       'instance': instance,
+      'pushUpdate' : pushUpdate,
     });
   }
 
-  void setFoodListState() {
-    setState(() => {});
+  void pushUpdate() {
+    setState(() => {
+    });
   }
 
   Icon trailingIcon;
@@ -112,7 +114,6 @@ class _foodItemState extends State<foodItem> {
   Widget build(BuildContext context) {
     trailingIcon = Icon(Icons.edit);
     inv_item = instance.inventoryData[item_id];
-    inv_item.setFoodListState = setFoodListState;
     information = inv_item.value + "  " + inv_item.unit;
     //checking if the iventory item has been added and if not change the displayed information
     if (inv_item.isAdded != true) {

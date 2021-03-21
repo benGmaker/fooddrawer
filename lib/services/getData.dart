@@ -40,12 +40,11 @@ class userData {
 
   void set_name(item_id, String newVar) {
     inventoryData[item_id].name = newVar;
-    inventoryData[item_id].setFoodListState();
     Changedata(user_id: newVar);
   }
 
   void set_unit(item_id, String newVar) {
-    inventoryData[item_id].unit = newVar;
+    inventoryData[item_id].unit  = newVar;
     Changedata(unit: newVar);
   }
 

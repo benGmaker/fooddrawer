@@ -6,18 +6,21 @@ class editVarPopup {
   String valueText;
   String item_id;
   Function changeVarData;
+  Function pushUpdate;
   editVarPopup({
-    this.setState,
     this.item_id,
     this.changeVarData,
+    this.pushUpdate,
+    this.setState,
   }) {
     textFieldController = TextEditingController();
   }
 
 
-  void changeData() {
+  Future<void> changeData() async {
     changeVarData(item_id, valueText);
-    print(valueText);
+    //await Future.delayed(Duration(seconds: 1));
+    pushUpdate();
   }
 
   TextEditingController textFieldController;

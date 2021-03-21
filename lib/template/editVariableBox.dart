@@ -2,16 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:fooddrawer/services/getData.dart';
 import 'package:fooddrawer/template/editVarPopup.dart';
 
-class editVariableBox extends StatefulWidget {
+class InvItemPageData {
+  //class for storing inventory Item page data. The data which is stored in here is the same for each editVariableBox
   userData instance;
   String item_id;
+  Function pushUpdate;
+
+  InvItemPageData({
+    this.instance,
+    this.item_id,
+    this.pushUpdate,
+  });
+}
+
+class editVariableBox extends StatefulWidget {
+  InvItemPageData invItemPageData;
   String varName;
   String varDisp;
   Function changeVarData;
 
   editVariableBox({
-    this.instance,
-    this.item_id,
+    this.invItemPageData,
     this.varName,
     this.varDisp = '',
     this.changeVarData,
@@ -23,11 +34,10 @@ class editVariableBox extends StatefulWidget {
 
   @override
   _editVariableBoxState createState() => _editVariableBoxState(
-        instance: instance,
-        item_id: item_id,
         varName: varName,
         varDisp: varDisp,
         changeVarData: changeVarData,
+        invItemPageData: invItemPageData,
       );
 }
 
@@ -38,6 +48,8 @@ class _editVariableBoxState extends State<editVariableBox> {
   String varName;
   String varDisp;
   Function changeVarData;
+  Function parentPushUpdate;
+  InvItemPageData invItemPageData;
 
   //local settings
   inventoryItem inv_item;
@@ -45,28 +57,36 @@ class _editVariableBoxState extends State<editVariableBox> {
   Color color = Colors.amber[400];
 
   _editVariableBoxState({
-    this.instance,
-    this.item_id,
     this.varName,
     this.varDisp,
     this.changeVarData,
-  }) {}
+    this.invItemPageData,
+  }) {
+    item_id = invItemPageData.item_id;
+    instance = invItemPageData.instance;
+}
 
-  Future<void> onVarPressed(BuildContext context) async{
+  void pushUpdate() {
+    setState(() {
+      invItemPageData.pushUpdate();
+    });
+  }
+
+  Future<void> onVarPressed(BuildContext context) async {
     //What happens when the variable gets pressed.
 
     editVarPopup editVarPop = editVarPopup(
-        setState: setState,
+      pushUpdate: pushUpdate,
+      setState: setState,
       changeVarData: changeVarData,
       item_id: item_id,
     );
     return showDialog(
-        context: context,
-        builder: editVarPop.display,
+      context: context,
+      builder: editVarPop.display,
     );
-
-
   }
+
   TextEditingController _controller;
 
   @override
@@ -111,14 +131,13 @@ class _editVariableBoxState extends State<editVariableBox> {
                   ),
                   //TextField(
 
-                    //obscureText: true,
-                    //controller: _controller,
-                    //decoration: InputDecoration(
-                     // border: OutlineInputBorder(),
-                    //  labelText: varDisp,
-                   // ),
+                  //obscureText: true,
+                  //controller: _controller,
+                  //decoration: InputDecoration(
+                  // border: OutlineInputBorder(),
+                  //  labelText: varDisp,
+                  // ),
                   //),
-
                 ],
               ),
             ),
@@ -131,7 +150,8 @@ class _editVariableBoxState extends State<editVariableBox> {
             ),
           ],
         ),
-        style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(color)),
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(color)),
       ),
     );
   }

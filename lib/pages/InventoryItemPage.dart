@@ -16,44 +16,68 @@ class _InventoryItemPageState extends State<InventoryItemPage> {
   String item_id;
   inventoryItem item_data;
   ScrollController scrollController;
+  Function parentPushUpdate;
 
   _InventoryItemPageState() {
     scrollController = ScrollController();
-
-
   }
 
   Future<void> getHistoryData() async {}
 
   List<Widget> children;
-  void getChildren() {
-    children = [
-      editVariableBox(instance: instance, item_id: item_id, varName: "Name", varDisp: item_data.name, changeVarData: instance.set_name,),
-      editVariableBox(instance: instance, item_id: item_id, varName: "Experiation", varDisp: "(14-3-2021)",changeVarData: ()=>{},),
-      editVariableBox(instance: instance, item_id: item_id, varName: "Unit", varDisp: item_data.unit,changeVarData: instance.set_unit,),
 
+  void getChildren() {
+    InvItemPageData invItemPageData =InvItemPageData(
+      instance: instance,
+      item_id: item_id,
+      pushUpdate: pushUpdate,
+    );
+    children = [
+      editVariableBox(
+        invItemPageData: invItemPageData,
+        varName: "Name",
+        varDisp: item_data.name,
+        changeVarData: instance.set_name,
+      ),
+      editVariableBox(
+        invItemPageData: invItemPageData,
+        varName: "Experiation",
+        varDisp: "(14-3-2021)",
+        changeVarData: () => {},
+      ),
+      editVariableBox(
+        invItemPageData: invItemPageData,
+        varName: "Unit",
+        varDisp: item_data.unit,
+        changeVarData: instance.set_unit,
+      ),
     ];
+  }
+
+  void pushUpdate() {
+    setState(() {
+      parentPushUpdate();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-
     data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
     instance = data['instance'];
     item_id = data['item_id'];
+    parentPushUpdate = data['pushUpdate'];
     item_data = instance.inventoryData[item_id];
 
     //example how to change the data, this gets updated for the whole application
     //instance.inventoryData[item_id].name = "wow";
-    Widget leadingButton = leadingButtons().Back();
-    CustomAppBar myAppbar = CustomAppBar(
+    Widget leadingButton = leadingButtons().Back(); //getting leading button template
+    CustomAppBar myAppbar = CustomAppBar( //updating the appbar
       Title: item_data.name,
       leadingButton: leadingButton,
     );
-    getChildren();
+    getChildren(); //update children
 
     return Scaffold(
-
       appBar: myAppbar,
       body: ListView(
         padding: const EdgeInsets.all(8),
@@ -63,5 +87,3 @@ class _InventoryItemPageState extends State<InventoryItemPage> {
     );
   }
 }
-
-
