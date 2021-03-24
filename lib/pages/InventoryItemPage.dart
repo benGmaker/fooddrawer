@@ -36,7 +36,7 @@ class _InventoryItemPageState extends State<InventoryItemPage> {
       editVariableBox(
         invItemPageData: invItemPageData,
         varName: "Name",
-        getVarValue: () {return item_data.name;},
+        getVarValue: () {return item_data.name;}, //giving the editVariableBox a function for retrieving the current item name
         changeVarData: instance.set_name,
       ),
       editVariableBox(
